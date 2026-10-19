@@ -180,6 +180,14 @@ function page(name, tier, cases, probe = PROBE) {
         'body > [role="menu"] { position: fixed; }' +
       '</style>'
     : ''
+  // The host's scroll body on the home page (ui-conversation's ConversationRoot):
+  // a scroll container in every phase, which in the hero phase centres the
+  // composer seat, so the card stands with the hero's empty space above it. The
+  // crab rides the card's top edge in that space, and the studio case presses it
+  // there; a scroll body that starts at the card's edge clips it.
+  var heroScrollBody = name === 'studio'
+    ? '<style>[data-slot="root"] > [data-conversation-scroll] { display: flex; flex-direction: column; justify-content: center; height: 100vh; overflow-y: auto; }</style>'
+    : ''
   var hostControls = '<style>' +
       'body { --dsw-alias-label-primary-foreground: #ffffff; }' +
       'body[data-ds-dark-theme] { --dsw-alias-label-primary-foreground: #0f1115; }' +
@@ -437,6 +445,7 @@ ${dock}
 </div>
 </div>
 ${heroLayout}
+${heroScrollBody}
 ${hostControls}
 ${caretArea}
 ${chatSubmit}
